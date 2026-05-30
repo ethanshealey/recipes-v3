@@ -1,0 +1,23 @@
+:root {
+  --bg: #F7F4EE;
+  --surface: #F0EBE3;
+  --text: #1C1916;
+  --text-muted: #7A736B;
+  --accent: #8B6F5C;
+  --border: #DDD6CB;
+  --white: #FDFBF8;
+  --error: #9B2B2B;
+  --error-surface: #F9EDED;
+}
+
+[data-theme='dark'] {
+  --bg: #17140E;
+  --surface: #201C15;
+  --text: #EDE8DE;
+  --text-muted: #8A8278;
+  --accent: #C4956A;
+  --border: #2C2820;
+  --white: #1C1912;
+  --error: #D97373;
+  --error-surface: #2A1A1A;
+}

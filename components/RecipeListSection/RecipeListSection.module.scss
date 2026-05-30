@@ -1,0 +1,96 @@
+.tagFilters {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.filterTag {
+  background: none;
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.7rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: var(--font-dm-sans), sans-serif;
+  letter-spacing: 0.04em;
+
+  &:hover {
+    border-color: var(--text-muted);
+    color: var(--text);
+  }
+}
+
+.filterTagActive {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+
+  &:hover {
+    border-color: var(--text);
+    color: var(--bg);
+  }
+}
+
+.list {
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  gap: 2rem;
+
+  &:hover .title {
+    color: var(--accent);
+  }
+}
+
+.left {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex: 1;
+}
+
+.title {
+  font-family: var(--font-lora), serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  transition: color 0.12s;
+}
+
+.tags {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--surface);
+  padding: 0.12rem 0.45rem;
+  font-family: var(--font-dm-sans), serif;
+}
+
+.meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  padding: 2rem 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}

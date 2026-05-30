@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipes — Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F4EE;
+      --surface: #F0EBE3;
+      --text: #1C1916;
+      --text-muted: #7A736B;
+      --accent: #8B6F5C;
+      --border: #DDD6CB;
+      --white: #FDFBF8;
+    }
+
+    [data-theme="dark"] {
+      --bg: #17140E;
+      --surface: #201C15;
+      --text: #EDE8DE;
+      --text-muted: #8A8278;
+      --accent: #C4956A;
+      --border: #2C2820;
+      --white: #1C1912;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Mock page switcher (dev tool, not real UI) ── */
+    .mock-switcher {
+      background: #1C1916;
+      padding: 0.6rem 2rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .mock-switcher span {
+      color: #5A534D;
+      font-size: 0.7rem;
+      font-family: monospace;
+      letter-spacing: 0.08em;
+      margin-right: 0.25rem;
+    }
+    .mock-btn {
+      background: none;
+      border: 1px solid #3A3530;
+      color: #BDB5AA;
+      padding: 0.25rem 0.7rem;
+      font-size: 0.72rem;
+      cursor: pointer;
+      font-family: monospace;
+      border-radius: 2px;
+    }
+    .mock-btn.active { background: #3A3530; color: #F7F4EE; }
+
+    /* ── Site nav ── */
+    nav.site-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-name {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Pages ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .container { max-width: 880px; margin: 0 auto; padding: 0 2.5rem; }
+
+    /* ════════════════════════════════════════
+       HOME PAGE
+    ════════════════════════════════════════ */
+    .home-header {
+      padding: 3.5rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .home-header h1 {
+      font-family: 'Lora', serif;
+      font-size: 2.25rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+    }
+    .home-header p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .search-bar {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .search-input {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--white);
+      padding: 0.6rem 0.875rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      max-width: 420px;
+    }
+    .search-input::placeholder { color: var(--text-muted); }
+    .search-input:focus { border-color: var(--accent); }
+
+    .tag-filters {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tag {
+      background: none;
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.7rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.04em;
+    }
+    .tag:hover { border-color: var(--text-muted); color: var(--text); }
+    .tag.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+    .recipe-list { list-style: none; }
+    a.recipe-list-item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      gap: 2rem;
+    }
+    .recipe-list-left { display: flex; align-items: baseline; gap: 1rem; flex: 1; }
+    .recipe-list-title {
+      font-family: 'Lora', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      transition: color 0.12s;
+    }
+    a.recipe-list-item:hover .recipe-list-title { color: var(--accent); }
+    .recipe-list-tags { display: flex; gap: 0.35rem; }
+    .recipe-tag {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--surface);
+      padding: 0.12rem 0.45rem;
+    }
+    .recipe-list-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ════════════════════════════════════════
+       RECIPE PAGE
+    ════════════════════════════════════════ */
+    .recipe-header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--border); }
+    .recipe-header-tags { display: flex; gap: 0.4rem; margin-bottom: 0.9rem; }
+    .recipe-header h1 {
+      font-family: 'Lora', serif;
+      font-size: 2.75rem;
+      font-weight: 400;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .recipe-description {
+      color: var(--text-muted);
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.65;
+      max-width: 540px;
+    }
+
+    .recipe-meta-bar {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .meta-item { display: flex; flex-direction: column; gap: 0.15rem; }
+    .meta-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .meta-value { font-size: 0.9rem; color: var(--text); }
+
+    .serving-scaler { margin-left: auto; display: flex; align-items: center; gap: 0.75rem; }
+    .scaler-controls {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border);
+    }
+    .scaler-btn {
+      width: 30px;
+      height: 30px;
+      border: none;
+      background: var(--white);
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .scaler-btn:hover { background: var(--surface); }
+    .scaler-count {
+      width: 36px;
+      height: 30px;
+      text-align: center;
+      border: none;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      background: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .recipe-body {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 4rem;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .col-heading {
+      font-size: 0.68rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .ingredient-group { margin-bottom: 2rem; }
+    .ingredient-group-title {
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0.75rem;
+    }
+    .ingredient-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      padding: 0.35rem 0;
+      font-size: 0.88rem;
+    }
+    .ingredient-qty {
+      color: var(--accent);
+      font-weight: 500;
+      min-width: 44px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+    .ingredient-notes { color: var(--text-muted); font-style: italic; font-size: 0.82rem; }
+
+    .instruction-group { margin-bottom: 2.25rem; }
+    .instruction-group-title {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .instruction-step { display: flex; gap: 1.25rem; margin-bottom: 1.1rem; align-items: flex-start; }
+    .step-num {
+      font-family: 'Lora', serif;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      min-width: 1.5rem;
+      padding-top: 0.2rem;
+    }
+    .step-text { font-size: 0.92rem; line-height: 1.72; color: var(--text); }
+
+    /* ════════════════════════════════════════
+       ADMIN PAGE
+    ════════════════════════════════════════ */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      min-height: calc(100vh - 116px);
+    }
+    .admin-sidebar {
+      border-right: 1px solid var(--border);
+      padding: 1.75rem 0;
+      background: var(--white);
+    }
+    .admin-sidebar-label {
+      font-size: 0.67rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 0 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .admin-nav-item {
+      display: block;
+      padding: 0.55rem 1.5rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+    }
+    .admin-nav-item:hover { color: var(--text); }
+    .admin-nav-item.active {
+      color: var(--text);
+      background: var(--surface);
+      border-left-color: var(--accent);
+      padding-left: calc(1.5rem - 2px);
+    }
+
+    .admin-content { padding: 2rem 2.5rem; }
+    .admin-content h2 {
+      font-family: 'Lora', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+    }
+
+    .form-group { margin-bottom: 1.4rem; }
+    .form-label {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 0.35rem;
+    }
+    .form-input, .form-textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--white);
+      padding: 0.55rem 0.875rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      color: var(--text);
+      outline: none;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+    .form-textarea { min-height: 90px; resize: vertical; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+
+    .form-section-title {
+      font-family: 'Lora', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin: 2rem 0 0.5rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-group-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin: 0.75rem 0 0.4rem;
+    }
+    .group-title-input {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin: 0.75rem 0 0.4rem;
+      display: block;
+      background: none;
+      border: none;
+      border-bottom: 1px dashed transparent;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      width: 100%;
+      padding: 0 0 0.15rem;
+      cursor: text;
+    }
+    .group-title-input::placeholder { color: var(--border); }
+    .group-title-input:hover { border-bottom-color: var(--border); }
+    .group-title-input:focus {
+      border-bottom-color: var(--accent);
+      color: var(--text);
+    }
+
+    .ingredient-input-row {
+      display: grid;
+      grid-template-columns: 65px 85px 1fr 0.65fr auto;
+      gap: 0.4rem;
+      margin-bottom: 0.4rem;
+      align-items: center;
+    }
+    .step-input-row {
+      display: grid;
+      grid-template-columns: 1.5rem 1fr auto;
+      gap: 0.75rem;
+      margin-bottom: 0.4rem;
+      align-items: flex-start;
+    }
+    .step-num-label {
+      font-family: 'Lora', serif;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      padding-top: 0.55rem;
+    }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.3rem;
+      line-height: 1;
+    }
+    .remove-btn:hover { color: #aa3333; }
+
+    .add-btn {
+      background: none;
+      border: 1px dashed var(--border);
+      color: var(--text-muted);
+      padding: 0.45rem 1rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      width: 100%;
+      margin-top: 0.4rem;
+      letter-spacing: 0.02em;
+    }
+    .add-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .add-group-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.4rem 0;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.04em;
+      display: block;
+      margin-top: 1rem;
+    }
+    .add-group-btn:hover { color: var(--accent); }
+
+    .form-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      padding: 0.6rem 1.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary:hover { background: #3A3530; }
+    .btn-secondary {
+      background: none;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { border-color: var(--text-muted); color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <div class="mock-switcher">
+    <span>MOCKUP</span>
+    <button class="mock-btn active" onclick="showPage('home', this)">Home</button>
+    <button class="mock-btn" onclick="showPage('recipe', this)">Recipe</button>
+    <button class="mock-btn" onclick="showPage('admin', this)">Admin</button>
+    <button class="mock-btn" id="theme-btn" onclick="toggleTheme()" style="margin-left:auto">Dark mode</button>
+  </div>
+
+  <nav class="site-nav">
+    <a href="#" class="site-name">Recipes</a>
+    <ul class="nav-links">
+      <li><a href="#">Browse</a></li>
+      <li><a href="#">Tags</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══════════════ HOME ══════════════ -->
+  <div id="page-home" class="page active">
+    <div class="container">
+      <div class="home-header">
+        <h1>Recipes</h1>
+        <p>A personal collection.</p>
+      </div>
+      <div class="search-bar">
+        <input class="search-input" type="text" placeholder="Search recipes…">
+      </div>
+      <div class="tag-filters">
+        <button class="tag active">All</button>
+        <button class="tag">Vegetarian</button>
+        <button class="tag">Dinner</button>
+        <button class="tag">Pasta</button>
+        <button class="tag">Baking</button>
+        <button class="tag">Soup</button>
+        <button class="tag">Quick</button>
+        <button class="tag">Breakfast</button>
+      </div>
+      <ul class="recipe-list">
+        <a href="#" class="recipe-list-item">
+          <div class="recipe-list-left">
+            <span class="recipe-list-title">Apple Pie</span>
+            <div class="recipe-list-tags">
+              <span class="recipe-tag">Baking</span>
+              <span class="recipe-tag">Dessert</span>
+            </div>
+          </div>
+          <span class="recipe-list-meta">1 hr 20 min</span>
+        </a>
+        <a href="#" class="recipe-list-item">
+          <div class="recipe-list-left">
+            <span class="recipe-list-title">Roasted Garlic Pasta</span>
+            <div class="recipe-list-tags">
+              <span class="recipe-tag">Pasta</span>
+              <span class="recipe-tag">Vegetarian</span>
+            </div>
+          </div>
+          <span class="recipe-list-meta">30 min</span>
+        </a>
+        <a href="#" class="recipe-list-item">
+          <div class="recipe-list-left">
+            <span class="recipe-list-title">French Onion Soup</span>
+            <div class="recipe-list-tags">
+              <span class="recipe-tag">Soup</span>
+              <span class="recipe-tag">Dinner</span>
+            </div>
+          </div>
+          <span class="recipe-list-meta">1 hr 10 min</span>
+        </a>
+        <a href="#" class="recipe-list-item">
+          <div class="recipe-list-left">
+            <span class="recipe-list-title">Brown Butter Chocolate Chip Cookies</span>
+            <div class="recipe-list-tags">
+              <span class="recipe-tag">Baking</span>
+              <span class="recipe-tag">Dessert</span>
+            </div>
+          </div>
+          <span class="recipe-list-meta">45 min</span>
+        </a>
+        <a href="#" class="recipe-list-item">
+          <div class="recipe-list-left">
+            <span class="recipe-list-title">Lemon Herb Roast Chicken</span>
+            <div class="recipe-list-tags">
+              <span class="recipe-tag">Dinner</span>
+            </div>
+          </div>
+          <span class="recipe-list-meta">1 hr 30 min</span>
+        </a>
+        <a href="#" class="recipe-list-item">
+          <div class="recipe-list-left">
+            <span class="recipe-list-title">Tomato Basil Risotto</span>
+            <div class="recipe-list-tags">
+              <span class="recipe-tag">Vegetarian</span>
+              <span class="recipe-tag">Dinner</span>
+            </div>
+          </div>
+          <span class="recipe-list-meta">40 min</span>
+        </a>
+        <a href="#" class="recipe-list-item">
+          <div class="recipe-list-left">
+            <span class="recipe-list-title">Sourdough Pancakes</span>
+            <div class="recipe-list-tags">
+              <span class="recipe-tag">Breakfast</span>
+              <span class="recipe-tag">Vegetarian</span>
+            </div>
+          </div>
+          <span class="recipe-list-meta">20 min</span>
+        </a>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════════ RECIPE ══════════════ -->
+  <div id="page-recipe" class="page">
+    <div class="container">
+      <div class="recipe-header">
+        <div class="recipe-header-tags">
+          <span class="recipe-tag">Baking</span>
+          <span class="recipe-tag">Dessert</span>
+        </div>
+        <h1>Apple Pie</h1>
+        <p class="recipe-description">A classic double-crust apple pie with a buttery, flaky pastry and warmly spiced filling. Best served slightly warm.</p>
+      </div>
+
+      <div class="recipe-meta-bar">
+        <div class="meta-item">
+          <span class="meta-label">Prep</span>
+          <span class="meta-value">30 min</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Cook</span>
+          <span class="meta-value">50 min</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Total</span>
+          <span class="meta-value">1 hr 20 min</span>
+        </div>
+        <div class="serving-scaler">
+          <div class="meta-item">
+            <span class="meta-label">Servings</span>
+          </div>
+          <div class="scaler-controls">
+            <button class="scaler-btn" onclick="changeServings(-1)">−</button>
+            <input class="scaler-count" id="serving-count" value="8" readonly>
+            <button class="scaler-btn" onclick="changeServings(1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="recipe-body">
+        <div class="ingredients-col">
+          <div class="col-heading">Ingredients</div>
+
+          <div class="ingredient-group">
+            <div class="ingredient-group-title">For the crust</div>
+            <div class="ingredient-item">
+              <span class="ingredient-qty" data-base="2.5">2½</span>
+              <span>cups all-purpose flour</span>
+            </div>
+            <div class="ingredient-item">
+              <span class="ingredient-qty" data-base="1">1</span>
+              <span>tsp salt</span>
+            </div>
+            <div class="ingredient-item">
+              <span class="ingredient-qty" data-base="1">1</span>
+              <span>cup unsalted butter, <span class="ingredient-notes">cold & cubed</span></span>
+            </div>
+            <div class="ingredient-item">
+              <span class="ingredient-qty" data-base="6">6</span>
+              <span>tbsp ice water</span>
+            </div>
+          </div>
+
+          <div class="ingredient-group">
+            <div class="ingredient-group-title">For the filling</div>
+            <div class="ingredient-item">
+              <span class="ingredient-qty" data-base="6">6</span>
+              <span>apples, <span class="ingredient-notes">peeled & sliced</span></span>
+            </div>
+            <div class="ingredient-item">
+              <span class="ingredient-qty" data-base="0.75">¾</span>
+              <span>cup sugar</span>
+            </div>
+            <div class="ingredient-item">
+              <span class="ingredient-qty" data-base="2">2</span>
+              <span>tbsp cornstarch</span>
+            </div>
+            <div class="ingredient-item">
+              <span class="ingredient-qty" data-base="1.5">1½</span>
+              <span>tsp cinnamon</span>
+            </div>
+            <div class="ingredient-item">
+              <span class="ingredient-qty" data-base="0.25">¼</span>
+              <span>tsp nutmeg</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="instructions-col">
+          <div class="col-heading">Instructions</div>
+
+          <div class="instruction-group">
+            <div class="instruction-group-title">Make the crust</div>
+            <div class="instruction-step">
+              <span class="step-num">1.</span>
+              <p class="step-text">Whisk flour and salt together in a large bowl. Add cold butter and work it into the flour with your fingers until the mixture resembles coarse crumbs with pea-sized pieces remaining.</p>
+            </div>
+            <div class="instruction-step">
+              <span class="step-num">2.</span>
+              <p class="step-text">Drizzle in ice water one tablespoon at a time, mixing gently until the dough just comes together. Divide in half, flatten into discs, wrap, and refrigerate for at least 1 hour.</p>
+            </div>
+          </div>
+
+          <div class="instruction-group">
+            <div class="instruction-group-title">Make the filling</div>
+            <div class="instruction-step">
+              <span class="step-num">3.</span>
+              <p class="step-text">Toss sliced apples with sugar, cornstarch, cinnamon, and nutmeg until evenly coated. Let sit 15 minutes so the apples release their juices.</p>
+            </div>
+          </div>
+
+          <div class="instruction-group">
+            <div class="instruction-group-title">Assemble & bake</div>
+            <div class="instruction-step">
+              <span class="step-num">4.</span>
+              <p class="step-text">Preheat oven to 425°F (220°C). Roll one dough disc into a 12-inch circle and fit it into a 9-inch pie dish, letting the excess hang over the edges.</p>
+            </div>
+            <div class="instruction-step">
+              <span class="step-num">5.</span>
+              <p class="step-text">Pour in the filling. Roll the second disc and lay it over the top. Trim the overhang to ½ inch, crimp the edges to seal, and cut several vents in the top crust.</p>
+            </div>
+            <div class="instruction-step">
+              <span class="step-num">6.</span>
+              <p class="step-text">Bake at 425°F for 20 minutes, then reduce to 375°F (190°C) and bake another 30–35 minutes until the crust is deep golden and the filling is bubbling.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ ADMIN ══════════════ -->
+  <div id="page-admin" class="page">
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="admin-sidebar-label">Admin</div>
+        <span class="admin-nav-item active">All Recipes</span>
+        <span class="admin-nav-item">New Recipe</span>
+      </aside>
+      <div class="admin-content">
+        <h2>New Recipe</h2>
+
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input class="form-input" type="text" placeholder="e.g. Apple Pie">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" placeholder="A short description of the recipe…"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Servings</label>
+            <input class="form-input" type="number" placeholder="4">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prep time (min)</label>
+            <input class="form-input" type="number" placeholder="30">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cook time (min)</label>
+            <input class="form-input" type="number" placeholder="50">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tags</label>
+          <input class="form-input" type="text" placeholder="baking, dessert, vegetarian…">
+        </div>
+
+        <div class="form-section-title">Ingredients</div>
+        <input class="group-title-input" type="text" value="For the crust" placeholder="Group name…">
+        <datalist id="unit-options">
+          <option value="tsp">
+          <option value="tbsp">
+          <option value="cup">
+          <option value="fl oz">
+          <option value="ml">
+          <option value="L">
+          <option value="oz">
+          <option value="g">
+          <option value="lb">
+          <option value="kg">
+          <option value="pinch">
+          <option value="dash">
+          <option value="clove">
+          <option value="sprig">
+          <option value="slice">
+          <option value="piece">
+          <option value="handful">
+        </datalist>
+        <div class="ingredient-input-row">
+          <input class="form-input" type="text" placeholder="Qty">
+          <input class="form-input" type="text" placeholder="Unit" list="unit-options">
+          <input class="form-input" type="text" placeholder="Ingredient name">
+          <input class="form-input" type="text" placeholder="Note (optional)">
+          <button class="remove-btn">×</button>
+        </div>
+        <div class="ingredient-input-row">
+          <input class="form-input" type="text" placeholder="Qty">
+          <input class="form-input" type="text" placeholder="Unit" list="unit-options">
+          <input class="form-input" type="text" placeholder="Ingredient name">
+          <input class="form-input" type="text" placeholder="Note (optional)">
+          <button class="remove-btn">×</button>
+        </div>
+        <button class="add-btn">+ Add ingredient</button>
+        <button class="add-group-btn">+ Add ingredient group</button>
+
+        <div class="form-section-title">Instructions</div>
+        <input class="group-title-input" type="text" value="Make the crust" placeholder="Group name…">
+        <div class="step-input-row">
+          <span class="step-num-label">1.</span>
+          <textarea class="form-textarea" style="min-height:72px" placeholder="Describe this step…"></textarea>
+          <button class="remove-btn" style="padding-top:0.5rem">×</button>
+        </div>
+        <div class="step-input-row">
+          <span class="step-num-label">2.</span>
+          <textarea class="form-textarea" style="min-height:72px" placeholder="Describe this step…"></textarea>
+          <button class="remove-btn" style="padding-top:0.5rem">×</button>
+        </div>
+        <button class="add-btn">+ Add step</button>
+        <button class="add-group-btn">+ Add instruction group</button>
+
+        <div class="form-actions">
+          <button class="btn-primary">Save Recipe</button>
+          <button class="btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showPage(name, btn) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'))
+      document.querySelectorAll('.mock-btn').forEach(b => b.classList.remove('active'))
+      document.getElementById('page-' + name).classList.add('active')
+      btn.classList.add('active')
+    }
+
+    const BASE_SERVINGS = 8
+    let currentServings = 8
+
+    const FRACTIONS = { 0.25: '¼', 0.33: '⅓', 0.5: '½', 0.67: '⅔', 0.75: '¾' }
+
+    function formatQty(n) {
+      const whole = Math.floor(n)
+      const frac = Math.round((n - whole) * 100) / 100
+      const fracStr = FRACTIONS[frac] ?? (frac > 0 ? frac.toString() : '')
+      return (whole > 0 ? whole : '') + fracStr || n.toString()
+    }
+
+    function changeServings(delta) {
+      currentServings = Math.max(1, currentServings + delta)
+      document.getElementById('serving-count').value = currentServings
+      document.querySelectorAll('[data-base]').forEach(el => {
+        const base = parseFloat(el.dataset.base)
+        const scaled = (base / BASE_SERVINGS) * currentServings
+        el.textContent = formatQty(scaled)
+      })
+    }
+
+    document.querySelectorAll('.tag').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.tag').forEach(x => x.classList.remove('active'))
+        t.classList.add('active')
+      })
+    })
+
+    function toggleTheme() {
+      const isDark = document.documentElement.dataset.theme === 'dark'
+      document.documentElement.dataset.theme = isDark ? '' : 'dark'
+      document.getElementById('theme-btn').textContent = isDark ? 'Dark mode' : 'Light mode'
+    }
+  </script>
+</body>
+</html>

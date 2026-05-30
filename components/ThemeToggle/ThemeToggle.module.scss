@@ -1,0 +1,15 @@
+.toggle {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+
+  &:hover {
+    border-color: var(--text-muted);
+    color: var(--text);
+  }
+}

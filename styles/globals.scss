@@ -1,0 +1,29 @@
+@use './variables';
+@use './reset';
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-lora), serif;
+  font-size: 16px;
+  line-height: 1.6;
+  transition: background 0.2s, color 0.2s;
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.title {
+	padding: 3.5rem 0 2rem;
+	border-bottom: 1px solid var(--border);
+  h1 {
+    font-weight: 600;
+  }
+  p {
+    font-family: var(--font-dm-sans), serif;
+    color: var(--text-muted);
+  }
+}

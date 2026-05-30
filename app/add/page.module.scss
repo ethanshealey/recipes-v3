@@ -1,0 +1,11 @@
+.header {
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+
+  h1 {
+    font-family: var(--font-lora), serif;
+    font-size: 2rem;
+    font-weight: 400;
+  }
+}

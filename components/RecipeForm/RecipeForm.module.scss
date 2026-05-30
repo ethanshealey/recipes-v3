@@ -1,0 +1,212 @@
+.form {
+  padding-bottom: 4rem;
+}
+
+.fieldGroup {
+  margin-bottom: 1.4rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-family: var(--font-dm-sans), sans-serif;
+  margin-bottom: 0.35rem;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  padding: 0.55rem 0.875rem;
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 0.875rem;
+  color: var(--text);
+  outline: none;
+
+  &:focus {
+    border-color: var(--accent);
+  }
+}
+
+.textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-lora), serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 2rem 0 0.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.groupTitleInput {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px dashed transparent;
+  outline: none;
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 0 0 0.15rem;
+  margin: 0.75rem 0 0.4rem;
+  cursor: text;
+
+  &::placeholder {
+    color: var(--border);
+  }
+
+  &:hover {
+    border-bottom-color: var(--border);
+  }
+
+  &:focus {
+    border-bottom-color: var(--accent);
+    color: var(--text);
+  }
+}
+
+.ingredientRow {
+  display: grid;
+  grid-template-columns: 65px 100px 1fr 0.65fr auto;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+  align-items: center;
+}
+
+.stepRow {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr auto;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+  align-items: flex-start;
+}
+
+.stepNum {
+  font-family: var(--font-lora), serif;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  padding-top: 0.55rem;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.3rem;
+  line-height: 1;
+
+  &:hover {
+    color: var(--error);
+  }
+}
+
+.addBtn {
+  background: none;
+  border: 1px dashed var(--border);
+  color: var(--text-muted);
+  padding: 0.45rem 1rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-family: var(--font-dm-sans), sans-serif;
+  width: 100%;
+  margin-top: 0.4rem;
+  letter-spacing: 0.02em;
+
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+.addGroupBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.4rem 0;
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-family: var(--font-dm-sans), sans-serif;
+  letter-spacing: 0.04em;
+  display: block;
+  margin-top: 1rem;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.ingredientBlock,
+.instructionBlock {
+  margin-bottom: 1.5rem;
+}
+
+.error {
+  font-size: 0.82rem;
+  color: var(--error);
+  font-family: var(--font-dm-sans), sans-serif;
+  margin-bottom: 1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.btnPrimary {
+  background: var(--text);
+  color: var(--bg);
+  border: none;
+  padding: 0.6rem 1.4rem;
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+
+  &:hover:not(:disabled) {
+    background: var(--accent);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.btnSecondary {
+  background: none;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 0.6rem 1.4rem;
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 0.875rem;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--text-muted);
+    color: var(--text);
+  }
+}

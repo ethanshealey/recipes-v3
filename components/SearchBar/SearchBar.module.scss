@@ -1,0 +1,25 @@
+.bar {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.input {
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  padding: 0.6rem 0.875rem;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  outline: none;
+  appearance: none;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:focus {
+    border-color: var(--accent);
+  }
+}

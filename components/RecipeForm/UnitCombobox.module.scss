@@ -1,0 +1,44 @@
+.wrap {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  padding: 0.55rem 0.875rem;
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 0.875rem;
+  color: var(--text);
+  outline: none;
+
+  &:focus {
+    border-color: var(--accent);
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: none;
+  list-style: none;
+  z-index: 20;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.option {
+  padding: 0.4rem 0.875rem;
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 0.85rem;
+  color: var(--text);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--surface);
+  }
+}
