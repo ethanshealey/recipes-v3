@@ -1,14 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 import { useToast } from '@/components/Toast/ToastProvider'
 import styles from './page.module.scss'
 
-export default function LoginPage() {
-  const router = useRouter()
+function MessageToast() {
   const searchParams = useSearchParams()
   const { showToast } = useToast()
 
@@ -16,6 +15,13 @@ export default function LoginPage() {
     const message = searchParams.get('message')
     if (message) showToast(message)
   }, [])
+
+  return null
+}
+
+export default function LoginPage() {
+  const router = useRouter()
+  const { showToast } = useToast()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -38,6 +44,9 @@ export default function LoginPage() {
 
   return (
     <div className={styles.wrapper}>
+      <Suspense>
+        <MessageToast />
+      </Suspense>
       <div className={styles.card}>
         <h1 className={styles.heading}>Sign in</h1>
         <form onSubmit={handleSubmit}>
