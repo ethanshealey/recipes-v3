@@ -2,6 +2,10 @@
   display: flex;
   justify-content: center;
   padding: 6rem 2.5rem;
+
+  @media (max-width: 640px) {
+    padding: 3rem 1.25rem;
+  }
 }
 
 .card {
